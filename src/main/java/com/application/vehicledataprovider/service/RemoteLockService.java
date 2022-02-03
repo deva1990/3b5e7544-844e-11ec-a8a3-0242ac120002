@@ -1,12 +1,12 @@
 package com.application.vehicledataprovider.service;
 
 import com.application.vehicledataprovider.data.entity.VehicleLockStatus;
+import com.application.vehicledataprovider.exception.RemoteLockServiceException;
 
 public interface RemoteLockService {
 
-  VehicleLockStatus getVehicleLockStatus(String VIN);
-  String createLockStatus(String VIN, String command);
-  String updateLockStatus(String VIN, String command);
+  VehicleLockStatus getVehicleLockStatus(String VIN) throws RemoteLockServiceException;
+  boolean updateLockStatus(String VIN, String command) throws RemoteLockServiceException;
   boolean validateCommand(String command);
 
 }

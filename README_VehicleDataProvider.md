@@ -202,6 +202,25 @@ We can get the current state of a CAR. whether it is locked or unlocked
     "vin": "WDD2906611A004817"
 }
 ```
+# 5) Get current Lock status of a Vehicle
+
+We can get the current state of a CAR. whether it is locked or unlocked
+
+## End point
+
+**GET {host}/api/v1/lockStatus/{VIN}**
+
+``` Sample JSON Output
+{
+    "isLocked": "Y",
+    "createdUser": "DMURUGE",
+    "createdDate": "2022-04-12",
+    "lastUpdatedUser": "DMURUGE",
+    "lastUpdatedDate": "2022-04-12",
+    "vin": "WDD2906611A004817"
+}
+```
+
 ## Database
 
 In-memory H2 database

@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import com.application.vehicledataprovider.data.entity.FeatureData;
 import com.application.vehicledataprovider.data.entity.VehicleData;
 import com.application.vehicledataprovider.data.entity.VehicleFeatureData;
+import com.application.vehicledataprovider.exception.FeatureServiceException;
 import com.application.vehicledataprovider.service.impl.GetFeatureDataServiceImpl;
 import com.application.vehicledataprovider.data.repository.FeatureDataRepository;
 import com.application.vehicledataprovider.data.repository.VehicleFeatureDataRepository;
@@ -35,7 +36,7 @@ class GetFeatureDataServiceImplTest {
     private GetFeatureDataServiceImpl getFeatureDataService;
 
     @Test
-    void getAllVehicleData() {
+    void getAllVehicleData() throws FeatureServiceException {
         List<FeatureData> list = new ArrayList<>();
         FeatureData f1 = new FeatureData("LT", "Live Traffic", "DMURUGE",
             new Date(System.currentTimeMillis()), "DMURUGE", new Date(System.currentTimeMillis()));
@@ -55,7 +56,7 @@ class GetFeatureDataServiceImplTest {
     }
 
     @Test
-    void shouldReturnTrueForValidFeature() {
+    void shouldReturnTrueForValidFeature() throws FeatureServiceException {
 
         VehicleFeatureData vehicleFeatureData = new VehicleFeatureData(100L,
             new VehicleData("WDD2906611A004819", "Bob", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()),"GLA", "White", "Y", "DMURUGE",new Date(System.currentTimeMillis()), "DMURUGE", new Date(System.currentTimeMillis())),

@@ -19,7 +19,7 @@ public interface VehicleLockStatusRepository extends CrudRepository<VehicleLockS
     public void createLockStatus(String VIN, String lockStatus, Date updateDate);
 
     @Modifying
-    @Query(value = "UPDATE VEH_LOCK_STATUS SET IS_LOCKED=:lockStatus, LAST_UPDT_S=:updateDate WHERE VIN=:VIN)", nativeQuery = true)
+    @Query(value = "UPDATE VEH_LOCK_STATUS SET IS_LOCKED=:lockStatus, LAST_UPDT_S=:updateDate WHERE VIN=:VIN", nativeQuery = true)
     @Transactional
     public void updateLockStatus(String VIN, String lockStatus, Date updateDate);
 }

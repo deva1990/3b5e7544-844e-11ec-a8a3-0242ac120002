@@ -2,6 +2,7 @@ package com.application.vehicledataprovider.service;
 
 import com.application.vehicledataprovider.data.entity.VehicleData;
 import com.application.vehicledataprovider.data.repository.VehicleDataRepository;
+import com.application.vehicledataprovider.exception.VehicleServiceException;
 import com.application.vehicledataprovider.service.impl.GetVehicleDataServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +28,7 @@ class GetVehicleDataServiceImplTest {
     private GetVehicleDataServiceImpl getVehicleDataServiceImpl;
 
     @Test
-    void getAllVehicleData() {
+    void getAllVehicleData() throws VehicleServiceException {
         List<VehicleData> list = new ArrayList<>();
 
         VehicleData v1 = new VehicleData("WDD2906611A004819", "Bob", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()),"GLA", "White", "Y", "DMURUGE",
@@ -48,7 +49,7 @@ class GetVehicleDataServiceImplTest {
     }
 
     @Test
-    void getVehicleData() {
+    void getVehicleData() throws VehicleServiceException {
 
         VehicleData v1 = new VehicleData("WDD2906611A004819", "Bob", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()),"GLA", "White", "Y", "DMURUGE",
                 new Date(System.currentTimeMillis()), "DMURUGE", new Date(System.currentTimeMillis()));

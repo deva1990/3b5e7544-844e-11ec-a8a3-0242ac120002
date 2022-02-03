@@ -34,7 +34,7 @@ We want to create below APIs as part of this user story
    	4) If no features are enabled, return "No features are enabled for the vehicle"
 
 
-4) API to list the history of the features (POST /api/get-feature-history/{VIN})
+4) API to list the history of the features (GET /api/get-feature-history/{VIN})
 
    Steps:
 
@@ -276,10 +276,10 @@ Possible status Codes
 Endpoint
 
 ```text
-POST /api/get-feature-history/{VIN}
+GET /api/get-feature-history/{VIN}
 ```
 
-Example output
+Example response
 
 ```json
 [

@@ -1,6 +1,8 @@
 package com.application.vehicledataprovider.controller;
 
+import com.application.vehicledataprovider.controller.model.UpdateLockStatusResponse;
 import com.application.vehicledataprovider.data.entity.VehicleLockStatus;
+import com.application.vehicledataprovider.exception.RemoteLockServiceException;
 import com.application.vehicledataprovider.service.RemoteLockService;
 import com.application.vehicledataprovider.service.impl.RemoteLockServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,41 +17,51 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/")
 public class RemoteLockController {
 
-    @Autowired
-    private RemoteLockService remoteLockService;
+  @Autowired
+  private RemoteLockService remoteLockService;
 
-    @RequestMapping(value = "/lockStatus/{VIN}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getVehicleLockStatus(@PathVariable("VIN") String VIN) {
-        try {
-            VehicleLockStatus vehicleLockStatus = remoteLockService.getVehicleLockStatus(VIN);
-            if(vehicleLockStatus != null) {
-                return ResponseEntity.status(HttpStatus.OK).body(vehicleLockStatus);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lock status not found for VIN: "+VIN);
-            }
-        } catch(Exception ex) {
-            ex.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Exception occurred while fetching Lock Status for VIN: "+VIN+". Exception Message: "+ex.getMessage());
-        }
+  @RequestMapping(value = "/lockStatus/{VIN}", method = RequestMethod.GET)
+  public ResponseEntity<Object> getVehicleLockStatus(@PathVariable("VIN") String VIN) {
+    try {
+      VehicleLockStatus vehicleLockStatus = remoteLockService.getVehicleLockStatus(VIN);
+      if (vehicleLockStatus != null) {
+        return ResponseEntity.status(HttpStatus.OK).body(vehicleLockStatus);
+      } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body("Lock status not found for VIN: " + VIN);
+      }
+    } catch (RemoteLockServiceException ex) {
+      ex.printStackTrace();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+          "Exception occurred while fetching Lock Status for VIN: " + VIN + ". Exception Message: "
+              + ex.getMessage());
     }
+  }
 
-    @RequestMapping(value = "/createLockStatus/{VIN}/{COMMAND}", method = RequestMethod.POST)
-    public ResponseEntity<Object> createLockStatus(@PathVariable("VIN") String VIN, @PathVariable("COMMAND") String command) {
-        if(remoteLockService.validateCommand(command)) {
-            String response = remoteLockService.createLockStatus(VIN, command);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+
+  @RequestMapping(value = "/updateLockStatus/{VIN}/{COMMAND}", method = RequestMethod.PUT)
+  public ResponseEntity<Object> updateLockStatus(@PathVariable("VIN") String VIN,
+      @PathVariable("COMMAND") String command) {
+    try {
+      if (remoteLockService.validateCommand(command)) {
+        UpdateLockStatusResponse updateLockStatusResponse = null;
+        if (remoteLockService.updateLockStatus(VIN, command)) {
+          updateLockStatusResponse = new UpdateLockStatusResponse(
+              VIN, command, 0, "Success");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Received Invalid Command: "+command);
+          updateLockStatusResponse = new UpdateLockStatusResponse(
+              VIN, command, 10, "Error updating the status");
         }
+        return ResponseEntity.status(HttpStatus.OK).body(updateLockStatusResponse);
+      } else {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body("Received Invalid Command: " + command);
+      }
+    } catch (RemoteLockServiceException ex) {
+      ex.printStackTrace();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+          "Exception occurred while fetching Lock Status for VIN: " + VIN + ". Exception Message: "
+              + ex.getMessage());
     }
-
-    @RequestMapping(value = "/updateLockStatus/{VIN}/{COMMAND}", method = RequestMethod.PUT)
-    public ResponseEntity<Object> updateLockStatus(@PathVariable("VIN") String VIN, @PathVariable("COMMAND") String command) {
-        if(remoteLockService.validateCommand(command)) {
-            String response = remoteLockService.updateLockStatus(VIN, command);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Received Invalid Command: "+command);
-        }
-    }
+  }
 }
