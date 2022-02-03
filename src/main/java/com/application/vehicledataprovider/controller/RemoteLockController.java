@@ -2,6 +2,7 @@ package com.application.vehicledataprovider.controller;
 
 import com.application.vehicledataprovider.data.entity.VehicleLockStatus;
 import com.application.vehicledataprovider.service.RemoteLockService;
+import com.application.vehicledataprovider.service.impl.RemoteLockServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

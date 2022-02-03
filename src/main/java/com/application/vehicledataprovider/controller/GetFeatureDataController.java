@@ -24,12 +24,17 @@ public class GetFeatureDataController {
 
     @RequestMapping(value = "/getAllFeatures", method = RequestMethod.GET)
     public ResponseEntity<Object> getAllFeatures() {
-        List<FeatureData> allFeatures = featureDataService.getAllFeatures();
-        if (!allFeatures.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.OK).body(allFeatures);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Features Found in DB");
+        try {
+            List<FeatureData> allFeatures = featureDataService.getAllFeatures();
+            if (!allFeatures.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.OK).body(allFeatures);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Features Found in DB");
 
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error getting vehicle features");
         }
 
     }

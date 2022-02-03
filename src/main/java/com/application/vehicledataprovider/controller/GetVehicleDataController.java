@@ -17,60 +17,55 @@ import java.util.List;
 @RequestMapping("/api/v1/")
 public class GetVehicleDataController {
 
-    @Autowired
-    private GetVehicleDataService getVehicleDataService;
+  @Autowired
+  private GetVehicleDataService getVehicleDataService;
 
 
-
-    @RequestMapping(value = "/getAllVehicles", method = RequestMethod.GET)
-    public ResponseEntity<Object> getAllVehicles() {
-        List<VehicleData> allVehicleData = getVehicleDataService.getAllVehicleData();
-        if (!allVehicleData.isEmpty()) {
-            for (VehicleData vehicleData : allVehicleData) {
-                System.out.println(vehicleData.toString());
-            }
-            return ResponseEntity.status(HttpStatus.OK).body(allVehicleData);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Vehicle Found in DB");
-
-        }
-
+  @RequestMapping(value = "/getAllVehicles", method = RequestMethod.GET)
+  public ResponseEntity<Object> getAllVehicles() {
+    List<VehicleData> allVehicleData = getVehicleDataService.getAllVehicleData();
+    if (!allVehicleData.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.OK).body(allVehicleData);
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Vehicle Found in DB");
     }
 
+  }
 
-    @RequestMapping(value = "/getVehicle/{VIN}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getVehicle(@PathVariable("VIN") String VIN) {
-        VehicleData vehicleData = getVehicleDataService.getVehicleData(VIN);
-        if (vehicleData!=null) {
-            return ResponseEntity.status(HttpStatus.OK).body(vehicleData);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle Not Found");
-        }
 
+  @RequestMapping(value = "/getVehicle/{VIN}", method = RequestMethod.GET)
+  public ResponseEntity<Object> getVehicle(@PathVariable("VIN") String VIN) {
+    VehicleData vehicleData = getVehicleDataService.getVehicleData(VIN);
+    if (vehicleData != null) {
+      return ResponseEntity.status(HttpStatus.OK).body(vehicleData);
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle Not Found");
     }
 
-    @RequestMapping(value = "/isValidVehicle/{VIN}", method = RequestMethod.GET)
-    public ResponseEntity<ValidVehicleResponse> isValidVehicle(@PathVariable("VIN") String VIN) {
-        VehicleData vehicleData = getVehicleDataService.getVehicleData(VIN);
-        if (vehicleData!=null) {
-            ValidVehicleResponse validVehicleResponse = new ValidVehicleResponse(VIN,Boolean.TRUE);
-            return ResponseEntity.status(HttpStatus.OK).body(validVehicleResponse);
-        } else {
-            ValidVehicleResponse validVehicleResponse = new ValidVehicleResponse(VIN,Boolean.FALSE);
-            return ResponseEntity.status(HttpStatus.OK).body(validVehicleResponse);
-        }
+  }
 
+  @RequestMapping(value = "/isValidVehicle/{VIN}", method = RequestMethod.GET)
+  public ResponseEntity<ValidVehicleResponse> isValidVehicle(@PathVariable("VIN") String VIN) {
+    VehicleData vehicleData = getVehicleDataService.getVehicleData(VIN);
+    if (vehicleData != null) {
+      ValidVehicleResponse validVehicleResponse = new ValidVehicleResponse(VIN, Boolean.TRUE);
+      return ResponseEntity.status(HttpStatus.OK).body(validVehicleResponse);
+    } else {
+      ValidVehicleResponse validVehicleResponse = new ValidVehicleResponse(VIN, Boolean.FALSE);
+      return ResponseEntity.status(HttpStatus.OK).body(validVehicleResponse);
     }
 
+  }
 
-    @RequestMapping(value = "/isTCUEnabled/{VIN}", method = RequestMethod.GET)
-    public ResponseEntity<Object> isTCUEnabled(@PathVariable("VIN") String VIN) {
-        VehicleData vehicleData = getVehicleDataService.getVehicleData(VIN);
-        if (vehicleData!=null) {
-            return ResponseEntity.status(HttpStatus.OK).body(vehicleData.getIsTCUEnabled());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle Not Found");
-        }
 
+  @RequestMapping(value = "/isTCUEnabled/{VIN}", method = RequestMethod.GET)
+  public ResponseEntity<Object> isTCUEnabled(@PathVariable("VIN") String VIN) {
+    VehicleData vehicleData = getVehicleDataService.getVehicleData(VIN);
+    if (vehicleData != null) {
+      return ResponseEntity.status(HttpStatus.OK).body(vehicleData.getIsTCUEnabled());
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle Not Found");
     }
+
+  }
 }
