@@ -7,34 +7,26 @@ Owner of the vehicle has an option to subscribe/unsubscribe the features they ne
 
 We want to create below APIs as part of this user story
 
-1) API to enable owner of a vehicle to enable/activate feature (PUT /api/update-feature)
+1) API to enable owner of a vehicle to enable/disable feature (PUT /api/update-feature)
 
    Steps:
 
    	1) Validate if the VIN is valid by calling the API {Host}/api/v1/isValidVehicle/{VIN}
    	2) Validate if the given feature is supported in the vehicle by calling the API {Host}/api/v1/isValidFeature/{VIN}/{FTRCode}
-   	3) Check if the given feature is already enabled in the vehicle, If yes, throw an Error saying "Feature is already enabled in the vehicle"
-   	4) If no, enable the given feature and update the status in Audit table.
+   	3) Check if the given feature is already enabled/disabled in the vehicle then throw an Error saying "Feature is already enabled/disabled in the vehicle" (based on the input)
+   	4) If no, enable/disable the given feature and update the status in Audit table.
 
-2) API to enable owner of a vehicle to disable/de-activate feature.(PUT /api/update-feature)
 
-   Steps:
-
-   	1) Validate if the VIN is valid by calling the API {Host}/api/v1/isValidVehicle/{VIN}
-   	2) Validate if the given feature is supported in the vehicle by calling the API {Host}/api/v1/validateFeature
-   	3) Check if the given feature is already disabled in the vehicle, If yes, throw an Error saying "Feature is already disabled in the vehicle"
-   	4) If no, disable the given feature and update the status in Audit table.
-
-3) API to list the features enabled in the given vehicle (GET /api/list-enabled-features/<VIN>)
+2) API to list the features enabled in the given vehicle (GET /api/list-enabled-features/<VIN>)
 
    Steps:
 
-   	1) Validate if the VIN is valid by calling the API {Host}/api/v1/isValidVehicle/{VIN}
-   	2) Check the list of features enabled in the vehicle and return
-   	4) If no features are enabled, return "No features are enabled for the vehicle"
+       1) Validate if the VIN is valid by calling the API {Host}/api/v1/isValidVehicle/{VIN}
+       2) Check the list of features enabled in the vehicle and return
+       4) If no features are enabled, return "No features are enabled for the vehicle"
 
 
-4) API to list the history of the features (GET /api/get-feature-history/{VIN})
+3) API to list the history of the features (GET /api/get-feature-history/{VIN})
 
    Steps:
 
