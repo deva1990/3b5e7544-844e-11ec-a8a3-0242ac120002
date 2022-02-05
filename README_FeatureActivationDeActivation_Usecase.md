@@ -291,6 +291,11 @@ Example response
 ]
 ```
 
+Note:
+	
+Start the "Vehicle-data-provider" application as a separate instance and call the supporting APIs required.	
+	
+	
 # Guidelines
 
 1) Follow the Java coding standards
