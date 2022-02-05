@@ -221,6 +221,18 @@ Ex: Request body
 }
 ```
 
+# 7) TCU Enabled 
+
+## End point
+
+**PUT {host}/api/v1/isTCUEnabled/{VIN}**
+
+Ex: Request 
+
+{host}/api/v1/isTCUEnabled/WDD2906611A004817
+
+This API returns Y or N if the TCU enabled or disabled
+
 ## Database
 
 In-memory H2 database
