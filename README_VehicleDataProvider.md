@@ -208,6 +208,10 @@ We can get the current state of a CAR. whether it is locked or unlocked
 
 **PUT {host}/api/v1//updateLockStatus/{VIN}/{COMMAND}**
 
+Ex: Request body
+
+{host}/api/v1/updateLockStatus/WDD2906611A004817/LOCK
+
 ``` Sample JSON Output
 {
     "command": "LOCK",
